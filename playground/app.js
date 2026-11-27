@@ -1,4 +1,5 @@
-import {compile as validateSnippet} from '../compiler.js?v=66f6d7376a10';
+import {documents, resolveDocLink} from './navigation.js?v=9affb8c3414f';
+import {compile as validateSnippet} from '../compiler.js?v=9affb8c3414f';
 const $=id=>document.getElementById(id),source=$('source');
 const names=['matmul','hello','pipes','fizzbuzz','factorial','fibonacci','primes','sorting','palindrome','binary-search','gradient-descent','fem','rule110','life','delta','reactive','svg'];
 for(const n of names){const o=document.createElement('option');o.value=n;o.textContent=n.replaceAll('-',' ');$('examples').append(o);}
@@ -22,9 +23,9 @@ async function load(){try{const r=await fetch('../examples/'+$('examples').value
 
 // The documentation reader deliberately supports a small safe Markdown subset.
 // Source text never becomes unsanitized HTML; inline tokens are escaped first.
-const documents={GUIDE:['Language guide','docs/GUIDE.md'],ARTICLE:['The paper','docs/ARTICLE.md'],SPECIFICATION:['Specification','docs/SPECIFICATION.md'],UNIVERSALITY:['Universality proof','docs/UNIVERSALITY.md'],ARCHITECTURE:['Architecture','docs/ARCHITECTURE.md'],OPTIMIZATION:['Optimizations','docs/OPTIMIZATION.md'],BENCHMARKS:['Benchmarks','bench/RESULTS.md']};
+
 let docRequest=0;
-function linkTarget(href,path){if(/^https?:\/\//.test(href))return href;if(href.startsWith('#'))return href;const resolved=new URL(href,new URL('../'+path,location.href));const base=new URL('../',location.href);const local=resolved.pathname.startsWith(base.pathname)?resolved.pathname.slice(base.pathname.length):resolved.pathname.replace(/^\//,'');const entry=Object.entries(documents).find(([,v])=>v[1]===local);return entry?'#'+entry[0]:'https://github.com/tverderesi/einstein/blob/main/'+local;}
+const linkTarget=(href,path)=>resolveDocLink(href,path,location.href);
 function inlineMD(text,path){const parts=text.split(/(`[^`]*`|\[[^\]]+\]\([^\s)]+\)|\*\*[^*]+\*\*)/g);return parts.map(t=>{if(t.startsWith('`'))return '<code>'+escape(t.slice(1,-1))+'</code>';const m=t.match(/^\[([^\]]+)\]\(([^)]+)\)$/);if(m){const href=linkTarget(m[2],path);return '<a href="'+escape(href).replaceAll('"','&quot;')+'"'+(href.startsWith('http')?' target="_blank" rel="noopener"':'')+'>'+escape(m[1])+'</a>';}if(t.startsWith('**'))return '<strong>'+escape(t.slice(2,-2))+'</strong>';return escape(t);}).join('');}
 async function showPage(page){const request=++docRequest;const lab=$('lab'),reading=$('reading');for(const b of document.querySelectorAll('[data-page]'))b.classList.toggle('nav-active',b.dataset.page===page);if(!documents[page]){lab.hidden=false;reading.hidden=true;return;}lab.hidden=true;reading.hidden=false;const [title,path]=documents[page];$('reading-label').textContent=title;$('reading-source').href='https://github.com/tverderesi/einstein/blob/main/'+path;$('document').textContent='Loading document…';$('toc').replaceChildren();try{const response=await fetch('../'+path+'?v='+release);if(!response.ok)throw Error('Document unavailable. The repository contains the source.');const text=await response.text();if(request!==docRequest)return;renderMarkdown(text,path);}catch(e){$('document').textContent=e.message;}}
 function renderMarkdown(text,path){const root=$('document');root.replaceChildren();const lines=text.split('\n');let paragraph=[],list=null;const flush=()=>{if(paragraph.length){const p=document.createElement('p');p.innerHTML=inlineMD(paragraph.join(' '),path);root.append(p);paragraph=[];}list=null;};

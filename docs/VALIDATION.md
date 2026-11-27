@@ -4,7 +4,7 @@ Validated on 2026-11-27 with Node.js v24.22.3, Linux x64.
 
 | Check | Observed result |
 |---|---|
-| `npm run check` | Build succeeded, 46 tests passed, all 17 examples passed naive/optimized differential execution |
+| `npm run check` | Build succeeded, 48 tests passed, all 17 examples passed naive/optimized differential execution |
 | Generated standalone ES module | Matrix program compiled, imported with the runtime, and returned `[[[58,64],[139,154]]]` |
 | Benchmark suite | Four kernels × three implementations, output assertions passed, 5 warm-ups / 15 timed runs; raw results recorded |
 | Counter translation | Instruction cases checked over small configurations, transfer-loop termination, nonhalting fuel diagnostic, exact integer growth beyond 2^53 |
@@ -17,3 +17,5 @@ Browser tests were manual tool-driven interactions, not a committed end-to-end b
 The build strips TypeScript types with Node's experimental built-in API; it does not perform a static `tsc` check. Semantic tests validate behavior, not type soundness. The proof is a mathematical reduction under stated ideal semantics, not a claim that testing proves universality.
 
 All 19 complete Einstein snippets in the practical guide are exercised by the automated guide test (the test discovers snippets directly from the Markdown).
+
+Documentation routing regression tests cover both local-preview and GitHub Pages paths, absolute GitHub Markdown URLs, external citations, and explicitly linked source files. The footer article link now targets the site reader.
