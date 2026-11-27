@@ -94,7 +94,7 @@ The compiler infers literal scalar categories, literal rectangular shapes, tenso
 |---|---|
 | `delta(i,j)`, `mask(p)` | Equality indicator and numeric Boolean mask |
 | `len(x)`, `at(a,i)`, `cell(a,i,j)`, `wrap(a,i)` | First extent and checked/periodic access |
-| `tabulate(n,f)`, `grid(n,m,f)` | Memoized tensors with element `f(i)` / `f(i,j)` |
+| `tabulate(n,f)`, `grid(n,m,f[,context])`, `realize(a)` | Memoized tensors with element `f(i)` / `f(i,j,context)` and explicit materialization |
 | `select(p,a,b)`, `iterate(s,F,H[,limit])` | Lazy selection and state recurrence |
 | `nat(x)`, `num(x)`, `str(x)` | Conversions; `nat` rejects negative inputs |
 | `floor`, `sqrt`, `abs`, `min`, `max`, `sin`, `cos` | Scalar mathematics |

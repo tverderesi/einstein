@@ -51,3 +51,9 @@ Output coordinates of a pure tensor equation are independent once their inputs a
 ## React stretch design
 
 A React adapter could own the event queue with `useReducer`, hold worker results in state, and map supported pure view tags into components. Tensor kernels should stay in the worker rather than execute during render. Cancellation and version IDs would be needed to prevent older results replacing newer ones in a concurrent UI. The project implements the framework-independent protocol only; a React integration is not shipped.
+
+## Documentation and evolving automata
+
+The documentation reader prominently links the article, specification, proof, architecture, optimizations, and benchmark tables. Complete article snippets can be opened in the editor. KaTeX 0.19.1 is loaded from jsDelivr using the official browser template's integrity hashes; it typesets display mathematics without permitting trusted HTML commands. Raw LaTeX remains the fallback when the renderer is unavailable. This optional frontend CDN dependency does not affect compiler/runtime or local build dependencies. A content hash versions the frontend asset URLs to avoid stale JavaScript after Pages deployments.
+
+Life emits an `automaton` view record. Its event reducer computes a whole next generation using contextual `grid`, then `realize` copies that finite result into immutable storage so successive generations do not retain an ever-growing lazy closure chain. The host supplies a 250ms clock, Play/Pause, Step, Reset, and a generation counter. Computation remains in Einstein; the host does not implement Conway's rules. Function fuel is refreshed per event, and each event has a wall-clock timeout.

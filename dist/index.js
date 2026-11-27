@@ -1,8 +1,8 @@
-export { compile } from './compiler.js';
-export { parse, lex } from './parser.js';
-export { createRuntime, Tensor, plain } from './runtime.js';
-import { compile } from './compiler.js';
-import { createRuntime } from './runtime.js';
+export { compile } from './compiler.js?v=0433d9b07186';
+export { parse, lex } from './parser.js?v=0433d9b07186';
+export { createRuntime, Tensor, plain } from './runtime.js?v=0433d9b07186';
+import { compile } from './compiler.js?v=0433d9b07186';
+import { createRuntime } from './runtime.js?v=0433d9b07186';
 export function run(source, options = {}) {
     const compilation = compile(source, options);
     const runtime = createRuntime(options);

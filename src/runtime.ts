@@ -23,7 +23,8 @@ export const builtins:Record<string,Value>={
  delta:(i:Value,j:Value)=>Number(i===j),mask:(b:Value)=>Number(Boolean(b)),len:(v:Value)=>v instanceof Tensor?v.shape[0]:v.length,
  str:(v:Value)=>String(v),nat:(v:Value)=>{const n=BigInt(v);if(n<0n)throw Error('Negative natural');return n;},num:Number,
  floor:Math.floor,sqrt:Math.sqrt,abs:Math.abs,min:Math.min,max:Math.max,sin:Math.sin,cos:Math.cos,
- tabulate:(n:number,f:Value)=>tensor([n],f),grid:(n:number,m:number,f:Value)=>tensor([n,m],f),
+ tabulate:(n:number,f:Value)=>tensor([n],f),grid:(n:number,m:number,f:Value,context?:Value)=>tensor([n,m],(i,j)=>f(i,j,context)),
+ realize:(v:Value)=>v instanceof Tensor?literal(v.toJSON(),false):v,
  at:(a:Value,i:number)=>get(a,i),cell:(a:Value,i:number,j:number)=>get(a,i,j),
  wrap:(a:Value,i:number)=>get(a,((i%extent(a,0))+extent(a,0))%extent(a,0)),
  join:(a:Value,s:string)=>Array.from({length:extent(a,0)},(_,i)=>get(a,i)).join(s),
@@ -36,5 +37,6 @@ export const builtins:Record<string,Value>={
 export function iterate(seed:Value,step:Value,done:Value,limit=Infinity):Value{let state=seed,n=0;while(!done(state)){if(n++>=limit)throw Error('Iteration fuel exhausted');state=step(state);}return state;}
 export function createRuntime(options:{fuel?:number}={}){
  let fuel=options.fuel??Infinity;return {Tensor,shape,get,tensor,literal,sum,extent,agree,plain,builtins,iterate,
+ resetFuel:()=>{fuel=options.fuel??Infinity;},
  tick:()=>{if(--fuel<0)throw Error('Execution fuel exhausted');},};
 }

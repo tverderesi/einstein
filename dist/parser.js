@@ -1,4 +1,4 @@
-import { Diagnostic } from './ast.js';
+import { Diagnostic } from './ast.js?v=0433d9b07186';
 export function lex(source) {
     const out = [];
     const re = /\s+|#[^\n]*|\/\/[^\n]*|"(?:\\.|[^"\\])*"|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?n?|[A-Za-z_][A-Za-z_0-9]*|==|!=|<=|>=|&&|\|\||[+*\/%<>=!\-()[\]{},:;.]/gy;

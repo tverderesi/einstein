@@ -1,6 +1,6 @@
 #!/usr/bin/env -S node --disable-warning=ExperimentalWarning
 import { readFileSync, writeFileSync } from 'node:fs';
-import { compile, run, plain } from './index.js';
+import { compile, run, plain } from './index.js?v=0433d9b07186';
 const [command, file, ...args] = process.argv.slice(2);
 try {
     if (!file || ![
@@ -17,7 +17,7 @@ try {
         const c = compile(source, {
             optimize
         });
-        const s = command === 'inspect' ? JSON.stringify(c.ir, null, 2) : `import {createRuntime} from './runtime.js';\nconst rt=createRuntime();\nconst result=(()=>{${c.code}\n})();\nexport default result;\n`;
+        const s = command === 'inspect' ? JSON.stringify(c.ir, null, 2) : `import {createRuntime} from './runtime.js?v=0433d9b07186';\nconst rt=createRuntime();\nconst result=(()=>{${c.code}\n})();\nexport default result;\n`;
         const oi = args.indexOf('--out');
         if (oi >= 0) writeFileSync(args[oi + 1], s);
         else console.log(s);

@@ -19,7 +19,7 @@ export function compile(source:string,options:{optimize?:boolean}={}):Compilatio
  const fns=new Map(ast.filter(s=>s.kind==='fn').map(s=>[s.name,s]));
  const symbols=new Set([...Object.keys(builtins),'select','iterate',...fns.keys()]);
  const safe=(n:string)=>'v_'+n;
- const arity:Record<string,number[]>={select:[3],iterate:[3,4],delta:[2],mask:[1],len:[1],str:[1],nat:[1],num:[1],floor:[1],sqrt:[1],abs:[1],sin:[1],cos:[1],tabulate:[2],grid:[3],at:[2],cell:[3],wrap:[2],join:[2],contains:[2],text:[1],svg:[1],view:[3],search:[2]};
+ const arity:Record<string,number[]>={select:[3],iterate:[3,4],delta:[2],mask:[1],len:[1],str:[1],nat:[1],num:[1],floor:[1],sqrt:[1],abs:[1],sin:[1],cos:[1],tabulate:[2],grid:[3,4],realize:[1],at:[2],cell:[3],wrap:[2],join:[2],contains:[2],text:[1],svg:[1],view:[3],search:[2]};
  function infer(e:Expr,locals:Set<string>):Type{
   if(e.kind==='literal')return {kind:e.nat?'natural':typeof e.value};
   if(e.kind==='id'){if(!locals.has(e.name)&&!symbols.has(e.name))throw new Diagnostic(`Unbound name ${e.name}`);return types[e.name]??{kind:fns.has(e.name)?'function':'unknown'};}
@@ -32,7 +32,7 @@ export function compile(source:string,options:{optimize?:boolean}={}):Compilatio
   if(!symbols.has(e.name))throw new Diagnostic(`Unknown function ${e.name}`);
   const allowed=arity[e.name]??(fns.has(e.name)?[fns.get(e.name)!.params.length]:undefined);if(allowed&&!allowed.includes(e.args.length))throw new Diagnostic(`Wrong arity for ${e.name}`);
   const ats=e.args.map(x=>infer(x,locals));if(e.name==='select'){if(ats[1].kind!==ats[2].kind&&!ats.some(x=>x.kind==='unknown'))throw new Diagnostic('select alternatives have different types');return ats[1].kind==='unknown'?ats[2]:ats[1];}
-  if(['str','join'].includes(e.name))return {kind:'string'};if(e.name==='nat')return {kind:'natural'};if(['text','svg','view'].includes(e.name))return {kind:'record'};if(['tabulate','grid','search'].includes(e.name))return {kind:'tensor'};if(e.name==='contains')return {kind:'boolean'};return {kind:fns.has(e.name)||e.name==='iterate'?'unknown':'number'};
+  if(['str','join'].includes(e.name))return {kind:'string'};if(e.name==='nat')return {kind:'natural'};if(['text','svg','view'].includes(e.name))return {kind:'record'};if(['tabulate','grid','search','realize'].includes(e.name))return {kind:'tensor'};if(e.name==='contains')return {kind:'boolean'};return {kind:fns.has(e.name)||e.name==='iterate'?'unknown':'number'};
  }
  function arrayCode(e:Expr):string{return e.kind==='array'?`[${e.items.map(arrayCode).join(',')}]`:emit(e);}
  function emit(e:Expr):string{
