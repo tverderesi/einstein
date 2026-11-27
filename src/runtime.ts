@@ -27,6 +27,7 @@ export const builtins:Record<string,Value>={
  at:(a:Value,i:number)=>get(a,i),cell:(a:Value,i:number,j:number)=>get(a,i,j),
  wrap:(a:Value,i:number)=>get(a,((i%extent(a,0))+extent(a,0))%extent(a,0)),
  join:(a:Value,s:string)=>Array.from({length:extent(a,0)},(_,i)=>get(a,i)).join(s),
+ search:(a:Value,q:string)=>Object.freeze(Array.from({length:extent(a,0)},(_,i)=>get(a,i)).filter(x=>String(x).toLowerCase().includes(q.toLowerCase()))),
  contains:(s:string,q:string)=>s.toLowerCase().includes(q.toLowerCase()),
  text:(s:Value)=>Object.freeze({tag:'text',text:String(s)}),
  svg:(points:Value)=>Object.freeze({tag:'svg',points:plain(points)}),

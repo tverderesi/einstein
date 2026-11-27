@@ -1,0 +1,4 @@
+import {compile,createRuntime,plain} from '../index.js';
+let result,state;
+self.onmessage=({data})=>{try{if(data.type==='event'){if(!result?.functions.update||!result?.functions.render)throw Error('No reactive program loaded');state=result.functions.update(state,data.event);self.postMessage({type:'render',view:plain(result.functions.render(state))});return;}
+const t0=performance.now(),c=compile(data.source,{optimize:data.optimize}),t1=performance.now();const f=new Function('rt',c.code),t2=performance.now();result=f(createRuntime({fuel:2000000}));state=result.bindings.initial;const output=plain(result.output),t3=performance.now();self.postMessage({type:'result',code:c.code,ir:c.ir,notes:c.optimizations,output,compile:t1-t0,execution:t3-t2,reactive:Boolean(result.functions.update&&result.functions.render&&state),view:result.functions.render&&state?plain(result.functions.render(state)):null});}catch(e){self.postMessage({type:'error',message:e.message});}};
