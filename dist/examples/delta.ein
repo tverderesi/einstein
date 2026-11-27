@@ -1,0 +1,3 @@
+let A = [10, 20, 30, 40];
+let copied[i: 4] = delta(i, k) * A[k];
+emit copied;

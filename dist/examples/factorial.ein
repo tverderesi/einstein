@@ -1,0 +1,4 @@
+fn step(s) = {n: s.n - 1n, value: s.value * s.n};
+fn done(s) = s.n == 0n;
+let result = iterate({n: 20n, value: 1n}, step, done);
+emit result.value;

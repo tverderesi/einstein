@@ -1,0 +1,5 @@
+# Minimize f(x)=(x-3)^2. Terminate on gradient tolerance.
+fn step(s) = {x: s.x - 0.1 * (2 * (s.x - 3)), n: s.n + 1};
+fn done(s) = abs(2 * (s.x - 3)) < 0.000001;
+let solution = iterate({x: 10, n: 0}, step, done, 1000);
+emit solution;

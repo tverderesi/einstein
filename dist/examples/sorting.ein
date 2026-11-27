@@ -1,0 +1,5 @@
+# Stable rank sorting: destination rank counts smaller values and earlier ties.
+let a = [4, 2, 4, 1, 3];
+let rank[i] = mask(a[j] < a[i] || (a[j] == a[i] && j < i));
+let sorted[k: 5] = a[i] * delta(rank[i], k);
+emit sorted;
