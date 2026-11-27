@@ -1,6 +1,6 @@
-import { parse } from './parser.js?v=0433d9b07186';
-import { Diagnostic } from './ast.js?v=0433d9b07186';
-import { builtins } from './runtime.js?v=0433d9b07186';
+import { parse } from './parser.js?v=31a1a7e39894';
+import { Diagnostic } from './ast.js?v=31a1a7e39894';
+import { builtins } from './runtime.js?v=31a1a7e39894';
 const children = (e)=>e.kind === 'binary' ? [
         e.left,
         e.right
