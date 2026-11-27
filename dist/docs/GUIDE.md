@@ -151,7 +151,26 @@ emit safeReciprocal(4);
 
 Functions may recurse. They cannot refer to value bindings declared later in the file. Put captured constants before their functions, and put execution after dependencies have been initialized. Anonymous functions and mutable local variables are not implemented.
 
-## 7. Recurrence without mutating state
+## 7. Pipes connect computations
+
+The pipe operator `|>` reads left to right. It passes its left value as the first argument to a named function:
+
+```einstein
+fn add(x, n) = x + n;
+fn square(x) = x * x;
+emit 3 |> add(4) |> square |> str;
+```
+
+The output is the string `"49"`. This is the same application as `str(square(add(3,4)))`. A target without parentheses takes the piped value as its only argument. A target with parentheses receives that value before its written arguments.
+
+```einstein
+fn label(i) = "Element " + str(i);
+emit 4 |> tabulate(label) |> join(", ");
+```
+
+Pipes associate left and have the lowest binary precedence: `3+4 |> square` means `square(3+4)`. Use parentheses to add arithmetic after a pipeline. Only named functions/calls are supported as targets; there are no anonymous function expressions.
+
+## 8. Recurrence without mutating state
 
 `iterate(initial,step,done)` describes a sequence of immutable states. It stops at the first state for which done is true, checking that predicate before another step.
 
@@ -173,7 +192,7 @@ emit result;
 
 State recurrence plus exact unbounded counters supplies the universality-bearing extension. Finite contractions do not acquire that property by themselves. The proof explains the distinction in full.
 
-## 8. Generating strings and structured tensors
+## 9. Generating strings and structured tensors
 
 Numeric index equations are for numeric/Boolean scalar computations. Use `tabulate` or `grid` when elements are strings or records:
 
@@ -191,7 +210,7 @@ emit svg(points);
 
 A grid calls `f(i,j)`. Its optional context argument calls `f(i,j,context)`, useful when a new grid depends on an earlier immutable one. `realize(tensor)` materializes its finite contents. The Life example uses this to avoid retaining a growing chain of earlier lazy generations.
 
-## 9. Reactive programs
+## 10. Reactive programs
 
 A reactive program exports an initial value and two named functions, update and render:
 
@@ -208,7 +227,7 @@ Select **reactive** from the example menu for searchable lists and conditional m
 
 This is a small supported view protocol, not arbitrary HTML or a full component framework. SVG descriptions currently draw polylines from numeric points.
 
-## 10. Using the playground effectively
+## 11. Using the playground effectively
 
 The editor contains the full current program. **Compile & run** starts a fresh worker and state; **Stop** terminates it. Toggle optimization to compare eager equation evaluation with lazy memoized evaluation and the conservative delta rewrite.
 
@@ -216,7 +235,7 @@ The console displays emitted values. Numeric arrays also appear as tensor tables
 
 If an input is silently doing nothing after a deployment, refresh the page. Versioned frontend assets reduce stale-cache mismatches; the source repository remains the authoritative version.
 
-## 11. Common mistakes
+## 12. Common mistakes
 
 | Message or symptom | Likely cause | Fix |
 |---|---|---|
@@ -231,7 +250,7 @@ If an input is silently doing nothing after a deployment, refresh the page. Vers
 
 The compiler's type inference is partial. An accepted program is not a guarantee that every scalar operation is well typed; unresolved function and record types can still fail at runtime. See the specification for exact limits.
 
-## 12. Running locally
+## 13. Running locally
 
 Install Node.js 24 or newer, clone the repository, and run:
 

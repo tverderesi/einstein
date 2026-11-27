@@ -79,6 +79,8 @@ let result = iterate({n: 20n, value: 1n}, step, done);
 emit result.value;
 ```
 
+For readable application chains, `x |> f(a)` passes x as the first argument to f, and pipelines associate left. This is conventional functional application syntax, not a new universality primitive.
+
 The `n` suffix denotes exact BigInt arithmetic. Finite memory remains finite memory; the universality statement concerns the conventional ideal semantics with unbounded resources. JavaScript Number counters would instead lose integer precision and invalidate a purported exact simulation at sufficiently large values.
 
 `select(predicate,a,b)` evaluates only the selected alternative. This matters for recursion and partial expressions. It is not eager multiplication by Boolean masks, and it is not honestly described as branchless. We have removed the `if` statement from the surface language, not conditional computation from the universe.

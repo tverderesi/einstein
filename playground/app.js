@@ -1,10 +1,10 @@
 import {compile as validateSnippet} from '../compiler.js';
 const $=id=>document.getElementById(id),source=$('source');
-const names=['matmul','hello','fizzbuzz','factorial','fibonacci','primes','sorting','palindrome','binary-search','gradient-descent','fem','rule110','life','delta','reactive','svg'];
+const names=['matmul','hello','pipes','fizzbuzz','factorial','fibonacci','primes','sorting','palindrome','binary-search','gradient-descent','fem','rule110','life','delta','reactive','svg'];
 for(const n of names){const o=document.createElement('option');o.value=n;o.textContent=n.replaceAll('-',' ');$('examples').append(o);}
 let worker,timer,last,mode='code',query='',autoTimer,autoRunning=false,lifeView=null;const release=new URL(import.meta.url).searchParams.get('v')||'dev';
 const escape=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-function highlight(){const tokens=source.value.match(/#[^\n]*|\/\/[^\n]*|"(?:\\.|[^"\\])*"|\b(?:let|fn|emit|true|false)\b|\b\d+(?:\.\d+)?n?\b|[\s\S]/g)||[];$('highlight').innerHTML=tokens.map(t=>{const c=/^#|^\/\//.test(t)?'comment':t[0]==='"'?'str':/^(let|fn|emit|true|false)$/.test(t)?'kw':/^\d/.test(t)?'num':'';return c?`<span class="${c}">${escape(t)}</span>`:escape(t);}).join('')+'\n';}
+function highlight(){const tokens=source.value.match(/#[^\n]*|\/\/[^\n]*|"(?:\\.|[^"\\])*"|\b(?:let|fn|emit|true|false)\b|\b\d+(?:\.\d+)?n?\b|\|>|[\s\S]/g)||[];$('highlight').innerHTML=tokens.map(t=>{const c=/^#|^\/\//.test(t)?'comment':t[0]==='"'?'str':(/^(let|fn|emit|true|false)$/.test(t)||t==='|>')?'kw':/^\d/.test(t)?'num':'';return c?`<span class="${c}">${escape(t)}</span>`:escape(t);}).join('')+'\n';}
 source.addEventListener('input',highlight);source.addEventListener('scroll',()=>{$('highlight').scrollTop=source.scrollTop;$('highlight').scrollLeft=source.scrollLeft;});
 source.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();execute();}if(e.key==='Tab'){e.preventDefault();source.setRangeText('  ',source.selectionStart,source.selectionEnd,'end');highlight();}});
 function stop(message='Stopped'){clearTimeout(timer);clearTimeout(autoTimer);autoRunning=false;worker?.terminate();worker=null;$('status').textContent=message;}

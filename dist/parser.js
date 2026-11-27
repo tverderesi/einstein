@@ -1,7 +1,7 @@
-import { Diagnostic } from './ast.js?v=31a1a7e39894';
+import { Diagnostic } from './ast.js?v=66f6d7376a10';
 export function lex(source) {
     const out = [];
-    const re = /\s+|#[^\n]*|\/\/[^\n]*|"(?:\\.|[^"\\])*"|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?n?|[A-Za-z_][A-Za-z_0-9]*|==|!=|<=|>=|&&|\|\||[+*\/%<>=!\-()[\]{},:;.]/gy;
+    const re = /\s+|#[^\n]*|\/\/[^\n]*|"(?:\\.|[^"\\])*"|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?n?|[A-Za-z_][A-Za-z_0-9]*|==|!=|<=|>=|&&|\|>|\|\||[+*\/%<>=!\-()[\]{},:;.]/gy;
     let at = 0;
     while(at < source.length){
         re.lastIndex = at;
@@ -20,6 +20,7 @@ export function lex(source) {
     return out;
 }
 const precedence = {
+    '|>': 0.5,
     '||': 1,
     '&&': 2,
     '==': 3,
@@ -136,11 +137,29 @@ export function parse(source) {
         }
         while((precedence[peek()] ?? 0) > min){
             const op = take();
-            e = {
+            const right = expr(precedence[op]);
+            if (op === '|>') {
+                if (right.kind === 'id') e = {
+                    kind: 'call',
+                    name: right.name,
+                    args: [
+                        e
+                    ]
+                };
+                else if (right.kind === 'call') e = {
+                    kind: 'call',
+                    name: right.name,
+                    args: [
+                        e,
+                        ...right.args
+                    ]
+                };
+                else throw new Diagnostic('Pipe target must be a named function or call', ts[p - 1].offset);
+            } else e = {
                 kind: 'binary',
                 op,
                 left: e,
-                right: expr(precedence[op])
+                right
             };
         }
         return e;

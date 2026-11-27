@@ -33,7 +33,9 @@ expressions= expression, { ",", expression } ;
 fields     = identifier, ":", expression, { ",", identifier, ":", expression } ;
 ```
 
-A call's callee must be a bare identifier; there are no anonymous functions or method calls. Unary operators may be nested (the parser's recursive prefix production). From lowest to highest, binary precedence is `||`, `&&`, `== !=`, `< > <= >=`, `+ -`, `* / %`; all binary operators associate left. Unary operators bind more tightly than binary operators; postfix indexing binds to its primary.
+The pipe `x |> f` means `f(x)`; `x |> f(a,b)` means `f(x,a,b)`. Pipes associate left and bind less tightly than logical operators. Pipe targets must be named functions or named calls. The parser lowers a pipe to an ordinary call AST node; this is application syntax, not a distinct runtime primitive. Pipes lower before index discovery: `a[i]*b[i] |> abs` in a scalar equation means summing `abs(a[i]*b[i])` per coordinate. Bind the contraction result first to pipe the whole sum.
+
+A call's callee must be a bare identifier; there are no anonymous functions or method calls. Unary operators may be nested (the parser's recursive prefix production). From lowest to highest, binary precedence is `|>`, `||`, `&&`, `== !=`, `< > <= >=`, `+ -`, `* / %`; all binary operators associate left. Unary operators bind more tightly than binary operators; postfix indexing binds to its primary.
 
 ## 4. Environments, functions, and values
 
