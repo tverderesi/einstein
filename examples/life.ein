@@ -1,7 +1,9 @@
-# A blinker, periodic 5x5 domain; one generation.
-let board = [[0,0,0,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,0,0,0]];
-fn c(i, j) = board[(i + 5) % 5, (j + 5) % 5];
-fn neighbors(i, j) = c(i-1,j-1)+c(i-1,j)+c(i-1,j+1)+c(i,j-1)+c(i,j+1)+c(i+1,j-1)+c(i+1,j)+c(i+1,j+1);
-fn next(i, j) = mask(neighbors(i,j)==3 || (c(i,j)==1 && neighbors(i,j)==2));
-let result = grid(5, 5, next);
-emit result;
+# A moving glider on a periodic 16x16 domain. The host supplies clock events.
+fn seed(i, j) = mask((i == 1 && j == 2) || (i == 2 && j == 3) || (i == 3 && j >= 1 && j <= 3));
+let initial = {cells: realize(grid(16, 16, seed)), generation: 0};
+fn c(cells, i, j) = cells[(i + len(cells)) % len(cells), (j + len(cells)) % len(cells)];
+fn neighbors(cells, i, j) = c(cells,i-1,j-1)+c(cells,i-1,j)+c(cells,i-1,j+1)+c(cells,i,j-1)+c(cells,i,j+1)+c(cells,i+1,j-1)+c(cells,i+1,j)+c(cells,i+1,j+1);
+fn next(i, j, cells) = mask(neighbors(cells,i,j)==3 || (c(cells,i,j)==1 && neighbors(cells,i,j)==2));
+fn update(s, event) = select(event.reset, initial, {cells: realize(grid(len(s.cells), len(s.cells), next, s.cells)), generation: s.generation + 1});
+fn render(s) = {tag: "automaton", cells: s.cells, generation: s.generation};
+emit render(initial);

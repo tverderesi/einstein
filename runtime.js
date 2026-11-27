@@ -140,10 +140,11 @@ export const builtins = {
     tabulate: (n, f)=>tensor([
             n
         ], f),
-    grid: (n, m, f)=>tensor([
+    grid: (n, m, f, context)=>tensor([
             n,
             m
-        ], f),
+        ], (i, j)=>f(i, j, context)),
+    realize: (v)=>v instanceof Tensor ? literal(v.toJSON(), false) : v,
     at: (a, i)=>get(a, i),
     cell: (a, i, j)=>get(a, i, j),
     wrap: (a, i)=>get(a, (i % extent(a, 0) + extent(a, 0)) % extent(a, 0)),
@@ -191,6 +192,9 @@ export function createRuntime(options = {}) {
         plain,
         builtins,
         iterate,
+        resetFuel: ()=>{
+            fuel = options.fuel ?? Infinity;
+        },
         tick: ()=>{
             if (--fuel < 0) throw Error('Execution fuel exhausted');
         }

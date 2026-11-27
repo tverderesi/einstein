@@ -176,9 +176,9 @@ Free output coordinates offer parallelization opportunities, while recurrence de
 
 ## 7. At last, a user interface
 
-The playground provides a source editor with highlighting, generated JavaScript and IR tabs, an execution console, tensor visualization, timings, and selectable examples. Compilation and execution take place in a module worker with an operational timeout. These limits keep the interface usable; they are not part of the ideal language semantics.
+The playground provides a source editor with highlighting, generated JavaScript and IR tabs, an execution console, tensor visualization, timings, and selectable examples. Its prominent documentation section includes this article, the specification, the universality proof, architecture notes, and measured benchmark tables. KaTeX typesets the LaTeX formulas; complete code examples can be opened directly in the editor. Compilation and execution take place in a module worker with an operational timeout. These limits keep the interface usable; they are not part of the ideal language semantics.
 
-A reactive program supplies `initial`, `update(state,event)`, and `render(state)`. An event yields a new immutable state. Rendering yields a pure record interpreted by a small DOM/SVG host. The example implements a counter, case-insensitive search of mathematicians, and a conditional empty-result message. A separate program generates sine-curve points rendered as an SVG polyline.
+A reactive program supplies `initial`, `update(state,event)`, and `render(state)`. An event yields a new immutable state. Rendering yields a pure record interpreted by a small DOM/SVG host. The example implements a counter, case-insensitive search of mathematicians, and a conditional empty-result message. A separate program generates sine-curve points rendered as an SVG polyline. Life uses a continuously evolving 16×16 glider with Play/Pause, Step, Reset, and a generation counter; each clock event invokes the Einstein state reducer.
 
 The host owns event delivery and effects. Einstein computes state and view values. This is a minimal functional rendering protocol, not a full layout engine or a React replacement. A React adapter could own the worker lifecycle and map view records to components; it remains a stretch design documented in the architecture, not a shipped integration.
 

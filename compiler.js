@@ -1,6 +1,6 @@
-import { parse } from './parser.js';
-import { Diagnostic } from './ast.js';
-import { builtins } from './runtime.js';
+import { parse } from './parser.js?v=0433d9b07186';
+import { Diagnostic } from './ast.js?v=0433d9b07186';
+import { builtins } from './runtime.js?v=0433d9b07186';
 const children = (e)=>e.kind === 'binary' ? [
         e.left,
         e.right
@@ -121,7 +121,11 @@ export function compile(source, options = {}) {
             2
         ],
         grid: [
-            3
+            3,
+            4
+        ],
+        realize: [
+            1
         ],
         at: [
             2
@@ -257,7 +261,8 @@ export function compile(source, options = {}) {
         if ([
             'tabulate',
             'grid',
-            'search'
+            'search',
+            'realize'
         ].includes(e.name)) return {
             kind: 'tensor'
         };
