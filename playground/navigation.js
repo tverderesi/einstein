@@ -5,6 +5,7 @@ export const documents = {
   UNIVERSALITY: ['Universality proof', 'docs/UNIVERSALITY.md'],
   ARCHITECTURE: ['Architecture', 'docs/ARCHITECTURE.md'],
   OPTIMIZATION: ['Optimizations', 'docs/OPTIMIZATION.md'],
+  COMPLEXITY: ['Big O costs', 'docs/COMPLEXITY.md'],
   BENCHMARKS: ['Benchmarks', 'bench/RESULTS.md'],
   RELATED_WORK: ['Related work', 'docs/RELATED_WORK.md'],
   VALIDATION: ['Validation report', 'docs/VALIDATION.md'],

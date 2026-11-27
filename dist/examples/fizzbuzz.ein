@@ -1,3 +1,5 @@
+# Big O: O(n) scalar steps + O(output characters). Reference cost model: docs/COMPLEXITY.md
+# Memory: O(n) output slots + output characters.
 fn fizz(n) = select(n % 15 == 0, "FizzBuzz", select(n % 3 == 0, "Fizz", select(n % 5 == 0, "Buzz", str(n))));
 fn entry(i) = fizz(i + 1);
 let result = tabulate(30, entry);

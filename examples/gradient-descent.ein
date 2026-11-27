@@ -1,3 +1,5 @@
+# Big O: O(T). Reference cost model: docs/COMPLEXITY.md
+# Memory: O(1) live scalar state.
 # Minimize f(x)=(x-3)^2. Terminate on gradient tolerance.
 fn step(s) = {x: s.x - 0.1 * (2 * (s.x - 3)), n: s.n + 1};
 fn done(s) = abs(2 * (s.x - 3)) < 0.000001;

@@ -1,3 +1,5 @@
+# Big O: O(n). Reference cost model: docs/COMPLEXITY.md
+# Memory: O(n).
 fn point(i) = {x: i * 12, y: 60 + 40 * sin(i / 4)};
 let points = tabulate(40, point);
 emit svg(points);

@@ -1,3 +1,5 @@
+# Big O: O(N) per generation; O(GN) for G generations. Reference cost model: docs/COMPLEXITY.md
+# Memory: O(N) live board and rendering data.
 # A moving glider on a periodic 16x16 domain. The host supplies clock events.
 fn seed(i, j) = mask((i == 1 && j == 2) || (i == 2 && j == 3) || (i == 3 && j >= 1 && j <= 3));
 let initial = {cells: realize(grid(16, 16, seed)), generation: 0};

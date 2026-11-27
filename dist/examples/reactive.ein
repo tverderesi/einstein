@@ -1,3 +1,5 @@
+# Big O: Counter update O(1); search/render O(n · C_match). Reference cost model: docs/COMPLEXITY.md
+# Memory: O(n) result slots + text.
 # Events carry either an increment or a query. The host owns event delivery.
 let names = ["Kronecker", "Cauchy", "Noether", "Euler", "Einstein"];
 fn update(s, event) = {count: s.count + event.increment, query: event.query};

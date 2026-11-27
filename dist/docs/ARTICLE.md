@@ -176,6 +176,8 @@ The delta result shows the value of removing an unnecessary dimension of work. I
 
 Free output coordinates offer parallelization opportunities, while recurrence dependencies constrain temporal parallelism. Parallel floating reductions would additionally need a stated rounding and reproducibility policy. No parallel benchmark or speedup is claimed. The obvious next backend is specialized loops over flat numeric buffers, with domain checks hoisted out of hot paths.
 
+The [Big O cost guide](COMPLEXITY.md) derives the implemented contraction costs and exposes examples whose compact notation hides poor algorithms. Matrix multiplication uses O(mkn) scalar work; the certified delta copy changes from O(n²) to O(n). The recursively defined Rule 110 history currently recomputes predecessor trees, costing O(W3^T) rather than a staged automaton’s O(WT). Exact integer programs additionally need bit-complexity accounting. These are analytical bounds under stated assumptions, separate from the measured wall times above.
+
 ## 7. At last, a user interface
 
 The playground provides a source editor with highlighting, generated JavaScript and IR tabs, an execution console, tensor visualization, timings, and selectable examples. Its prominent documentation section includes this article, the specification, the universality proof, architecture notes, and measured benchmark tables. KaTeX typesets the LaTeX formulas; complete code examples can be opened directly in the editor. Compilation and execution take place in a module worker with an operational timeout. These limits keep the interface usable; they are not part of the ideal language semantics.

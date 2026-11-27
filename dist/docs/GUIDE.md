@@ -271,3 +271,9 @@ npm run bench
 ```
 
 Next, read the [formal specification](SPECIFICATION.md), [universality proof](UNIVERSALITY.md), or [article](ARTICLE.md). The guide teaches usage; those documents state the semantics, assumptions, and measured consequences.
+
+## 14. Big O and operation costs
+
+Each bundled example shows a reference time and live-memory bound in the playground. Matrix multiplication is O(mkn), stable-rank sorting is O(n²), and binary search itself is O(log n) even though constructing its input is O(n). Exact factorial/Fibonacci also need bit-complexity accounting. The current recursive Rule 110 demo has exponential recomputation; sparse storage alone does not skip zero iterations.
+
+Read the [Big O cost guide](COMPLEXITY.md) for the general contraction formula, all builtin operations, all example bounds, assumptions, and the differences between algorithm costs and measured wall time. Editing a program clears its reference estimate.

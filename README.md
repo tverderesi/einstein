@@ -31,7 +31,7 @@ Use `--naive` for eager tensor equations and array-backed reduction temporaries.
 
 ## Status
 
-Version 0.1 is a working experimental compiler, not a mature general-purpose language. The first implementation includes a lexer/parser, AST, partial type and shape inference, index validation, contraction IR, JavaScript code generation, runtime, CLI, 17 executable examples, 48 automated tests, and recorded microbenchmarks. The browser playground, formal specification, universality reduction, architecture, and finished article are included. The published playground has been checked in a browser; see the validation report.
+Version 0.1 is a working experimental compiler, not a mature general-purpose language. The first implementation includes a lexer/parser, AST, partial type and shape inference, index validation, contraction IR, JavaScript code generation, runtime, CLI, 17 executable examples, 50 automated tests, and recorded microbenchmarks. The browser playground, formal specification, universality reduction, architecture, and finished article are included. The published playground has been checked in a browser; see the validation report.
 
 Universality requires the added unbounded recurrence and exact natural-number operations. Finite tensor contractions alone are not Turing complete. `src/counter-machine.ts` translates two-counter machines into ordinary Einstein source; it adds no privileged execution primitive.
 
@@ -47,6 +47,7 @@ MIT licensed. See [LICENSE](LICENSE).
 - [Universality proof](docs/UNIVERSALITY.md)
 - [Architecture and trade-offs](docs/ARCHITECTURE.md)
 - [Optimization investigation](docs/OPTIMIZATION.md)
+- [Big O operation and example costs](docs/COMPLEXITY.md)
 - [Measured benchmarks](bench/RESULTS.md)
 - [Related work](docs/RELATED_WORK.md)
 - [Validation report](docs/VALIDATION.md)

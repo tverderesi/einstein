@@ -1,3 +1,5 @@
+# Big O: O(E q² N + E q N²). Reference cost model: docs/COMPLEXITY.md
+# Memory: O(E q N + q² + N²).
 # Two unit 1D axial bar elements, EA/L = 1; local stiffness [[1,-1],[-1,1]].
 # P[e,a,i] is the local-to-global Boolean incidence tensor.
 let P = [[[1, 0, 0], [0, 1, 0]], [[0, 1, 0], [0, 0, 1]]];
