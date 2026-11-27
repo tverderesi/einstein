@@ -1,3 +1,5 @@
+# Big O: O(Σ C_stage); example O(n + output characters). Reference cost model: docs/COMPLEXITY.md
+# Memory: Stage-dependent; example O(n + output characters).
 # Value |> f(args) is f(value, args). Pure application, read left to right.
 fn add(x, n) = x + n;
 fn square(x) = x * x;
