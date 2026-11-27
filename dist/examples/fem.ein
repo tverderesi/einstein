@@ -1,8 +1,0 @@
-# Two unit 1D axial bar elements, EA/L = 1; local stiffness [[1,-1],[-1,1]].
-# P[e,a,i] is the local-to-global Boolean incidence tensor.
-let P = [[[1, 0, 0], [0, 1, 0]], [[0, 1, 0], [0, 0, 1]]];
-let ke = [[1, -1], [-1, 1]];
-# e must appear twice: combine one incidence with local stiffness first.
-let Q[e, a, j] = ke[a, b] * P[e, b, j];
-let K[i, j] = P[e, a, i] * Q[e, a, j];
-emit K;

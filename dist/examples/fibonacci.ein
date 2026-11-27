@@ -1,4 +1,0 @@
-fn step(s) = {n: s.n - 1n, a: s.b, b: s.a + s.b};
-fn done(s) = s.n == 0n;
-let result = iterate({n: 100n, a: 0n, b: 1n}, step, done);
-emit result.a;

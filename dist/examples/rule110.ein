@@ -1,9 +1,0 @@
-# Finite periodic ring. This demonstrator alone is NOT a universality proof.
-let initial = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
-fn rule(l, c, r) = (1 - l) * c * r + l * (1 - c) * r + l * c * (1 - r) + (1 - l) * c * (1 - r) + (1 - l) * (1 - c) * r;
-# Rule 110 outputs 1 on 110,101,011,010,001.
-fn nextCell(s, i) = rule(wrap(s, i - 1), wrap(s, i), wrap(s, i + 1));
-# grid generates the whole space-time diagram by pure recurrence.
-fn value(t, i) = select(t == 0, initial[i], rule(value(t - 1, (i + 15) % 16), value(t - 1, i), value(t - 1, (i + 1) % 16)));
-let history = grid(9, 16, value);
-emit history;

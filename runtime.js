@@ -150,6 +150,9 @@ export const builtins = {
     join: (a, s)=>Array.from({
             length: extent(a, 0)
         }, (_, i)=>get(a, i)).join(s),
+    search: (a, q)=>Object.freeze(Array.from({
+            length: extent(a, 0)
+        }, (_, i)=>get(a, i)).filter((x)=>String(x).toLowerCase().includes(q.toLowerCase()))),
     contains: (s, q)=>s.toLowerCase().includes(q.toLowerCase()),
     text: (s)=>Object.freeze({
             tag: 'text',

@@ -1,6 +1,0 @@
-let a = [1, 3, 5, 7, 9, 11, 13];
-fn mid(s) = floor((s.lo + s.hi) / 2);
-fn step(s) = select(a[mid(s)] == 9, {lo: s.lo, hi: s.hi, found: mid(s)}, select(a[mid(s)] < 9, {lo: mid(s) + 1, hi: s.hi, found: -1}, {lo: s.lo, hi: mid(s) - 1, found: -1}));
-fn done(s) = s.found >= 0 || s.lo > s.hi;
-let result = iterate({lo: 0, hi: 6, found: -1}, step, done);
-emit result.found;

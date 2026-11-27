@@ -146,6 +146,9 @@ export function compile(source, options = {}) {
         ],
         view: [
             3
+        ],
+        search: [
+            2
         ]
     };
     function infer(e, locals) {
@@ -253,7 +256,8 @@ export function compile(source, options = {}) {
         };
         if ([
             'tabulate',
-            'grid'
+            'grid',
+            'search'
         ].includes(e.name)) return {
             kind: 'tensor'
         };

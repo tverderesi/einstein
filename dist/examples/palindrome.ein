@@ -1,3 +1,0 @@
-let word = [114, 97, 99, 101, 99, 97, 114];
-let mismatch = mask(word[i] != word[6 - i]);
-emit mismatch == 0;

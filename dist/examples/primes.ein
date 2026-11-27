@@ -1,5 +1,0 @@
-fn trial(n, d) = select(d * d > n, true, select(n % d == 0, false, trial(n, d + 1)));
-fn prime(n) = n >= 2 && trial(n, 2);
-fn entry(i) = select(prime(i + 1), str(i + 1), "");
-let result = tabulate(30, entry);
-emit result;

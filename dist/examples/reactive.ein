@@ -1,6 +1,0 @@
-# Events carry either an increment or a query. The host owns event delivery.
-let names = ["Kronecker", "Cauchy", "Noether", "Euler", "Einstein"];
-fn update(s, event) = {count: s.count + event.increment, query: event.query};
-fn render(s) = view(s.count, s.query, names);
-let initial = {count: 0, query: ""};
-emit render(initial);
