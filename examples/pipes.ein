@@ -1,0 +1,8 @@
+# Value |> f(args) is f(value, args). Pure application, read left to right.
+fn add(x, n) = x + n;
+fn square(x) = x * x;
+fn label(i) = "Element " + str(i);
+let answer = 3 |> add(4) |> square |> str;
+let labels = 4 |> tabulate(label) |> join(", ");
+emit answer;
+emit labels;
